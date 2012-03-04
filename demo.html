@@ -1,0 +1,183 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script src="http://dev.openlayers.org/releases/OpenLayers-2.11/OpenLayers.js"></script>
+	<script src="build/olsocial.js"></script>
+	<script src="lib/SmartPopup.js"></script>
+	<style>
+		html, body{
+			padding:0;
+			margin:0
+		}
+		.twimg {
+			float:left;
+			margin: 0 10px 10px 0;
+			width: 48px;
+			height: 48px;
+		}
+		.twtext, .twuser {
+			font-size: small;
+			color: gray;
+			text-decoration:none;
+		}
+		.twuser{
+			font-weight:bold;
+		}
+		h2.tit{
+			font-size:small;
+			color: gray;
+			padding:0; 
+			margin: 0;
+		}
+
+		.lfmdesc{
+			font-size:small;
+			color: gray;
+		}
+		
+		lfmlabel{
+			font-weight:bold;
+		}
+
+		.ydesc{
+			font-size:small;
+			color: gray;
+			width: 150px;
+		}
+		
+		.lfmlabel{
+			font-weight:bold;
+		}
+		
+		a.ylink{
+			color: gray;
+			text-decoration: none;
+			display:block;
+		}
+	</style>
+    <script type="text/javascript">
+        var map, layer0, layer1, layer2, layer3, layer4, layer5, layer6;
+        function init(){
+            map = new OpenLayers.Map( 'map' );
+			
+            /*layer0 = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+                    "http://vmap0.tiles.osgeo.org/wms/vmap0",
+                    {layers: 'basic'} );
+					
+			*/
+			layer0= new OpenLayers.Layer.OSM( "Simple OSM Map");
+					
+			layer1 = new OpenLayers.Layer.Social.Twitter("Twitter",{
+				styleMap: new OpenLayers.StyleMap({
+					externalGraphic: 'img/twitter_fugue.png',
+					pointRadius: 8
+				})
+			});
+			
+			layer2 = new OpenLayers.Layer.Social.Flickr("Flickr","b3a77fdabcdf31ea15266ccffbb353c0",{});
+			
+			layer3 = new OpenLayers.Layer.Social.POIProxy("Gowalla (POIProxy)","gowalla",{
+				styleMap: new OpenLayers.StyleMap({
+					externalGraphic: 'img/gowalla.png',
+					pointRadius: 8
+				})
+			});
+			
+			layer4 = new OpenLayers.Layer.Social.Lastfm("Lastfm","b25b959554ed76058ac220b7b2e0a026",{
+				styleMap: new OpenLayers.StyleMap({
+					externalGraphic: 'img/lastfm.png',
+					pointRadius: 8
+				})
+			});
+			
+			layer5 = new OpenLayers.Layer.Social.Yelp("Yelp","s38_h6eGpQk1Ka8PjivJgw",{
+				styleMap: new OpenLayers.StyleMap({
+					externalGraphic: 'img/yelp.png',
+					pointRadius: 8
+				})
+			});
+			
+			layer6 = new OpenLayers.Layer.Social.POIProxy("Wikipedia (POIProxy)","wikipedia",{
+				styleMap: new OpenLayers.StyleMap({
+					externalGraphic: 'img/wikipedia.png',
+					pointRadius: 8
+				})
+			});
+									
+			map.addLayer(layer0);
+			map.addLayer(layer2);
+			map.addLayer(layer1);
+			map.addLayer(layer3);
+			map.addLayer(layer4);
+			map.addLayer(layer5);
+			map.addLayer(layer6);
+			
+			var p1 = new SmartPopup(map);
+			p1.addLayer('twitterPopup',layer1);
+			p1.addLayer('flickrPopup',layer2);
+			p1.addLayer('gowallaPopup',layer3);
+			p1.addLayer('lfmPopup',layer4);
+			p1.addLayer('yPopup',layer5);
+			p1.addLayer('wPopup',layer6);
+			
+			map.addControl(new OpenLayers.Control.LayerSwitcher());
+			
+			map.moveTo(
+                new OpenLayers.LonLat(16833745,-4015084), 13
+            );    
+        }
+
+    </script>
+    <body onload="init()">
+    <div id="map" style="width:100%;height:100%" class="olMap"></div>
+
+	<div id="twitterPopup" style="visibility:hidden; display:none">
+			<img src="%profile_image_url%" class="twimg"/>
+			<a class="twuser" href="http://twitter.com/%from_user%">%from_user%:</a>
+			<a class="twtext" href="http://twitter.com/%from_user%/status/%id_str%">%text%</a>
+		</div>
+		<div id="flickrPopup" style="visibility:hidden; display:none">
+			<h2 class="tit">%title%</h2>
+			<a class="twuser" href="http://www.flickr.com/photos/%owner%/%id%">
+				<img src="http://farm%farm%.static.flickr.com/%server%/%id%_%secret%_m.jpg" class="flimg"/>
+			</a><br/>
+			by: <a class="twuser" href="http://www.flickr.com/people/%owner%">%ownername%:</a>
+		</div>
+		<div id="gowallaPopup" style="visibility:hidden; display:none">
+			<h2 class="tit">%name%</h2>
+			<img src="%image_url%" class="flimg"/><br/>
+			<a class="twuser" href="http://gowalla.com%url%">more info on Gowalla</a>
+		</div>
+		<div id="lfmPopup" style="visibility:hidden; display:none">
+			<h2 class="tit">%title%</h2>
+			<a class="lfmlink" href="%url%"><img src="img/lastfm2.png"/></a><br/>
+			<span class="lfmdesc">
+				<span class="lfmlabel">Date:</span> %startDate% <br/>
+				<span class="lfmlabel">Website:</span> %website% <br/>
+				%description%
+			</span>
+		</div>
+		<div id="yPopup" style="visibility:hidden; display:none">
+			<h2 class="tit">%name%</h2>
+			<div style="width:300px;height:180px;margin:0;padding:0">
+				<div style="float:left;width:100px;margin-right:10px">
+					<img src="%rating_img_url%"/><br/>
+					<img class="yimg" src="%photo_url%"/><br/>
+				</div>
+				<span class="ydesc">
+					<span class="lfmlabel">Reviews:</span> %review_count% <br/>
+					<span class="lfmlabel">Phone:</span> %phone% <br/>
+					<span class="lfmlabel">Address:</span><br/>
+					%address1%<br/>
+					%address2%<br/>
+					%address3%<br/>
+					%zip% %city% <br/>
+				</span>
+				<a class="ylink" style="clear:both" href="%url%">more info on <img src="img/yelp2.png"/></a>
+			</div>
+		</div>
+		<div id="wPopup" style="visibility:hidden; display:none">
+			<h2 class="tit">%title%</h2>
+			<img src="img/wikipedia2.png"/><br/>
+			<a href="%url%" class="ylink">see article on Wikipedia</a>
+		</div>
+  
+</body></html>

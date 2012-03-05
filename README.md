@@ -42,7 +42,7 @@ Where parameters is the optional object with properties to set on the layers of 
 
 # POIProxy
 
-POIProxy is a service to retrieve Points of Interest from any public POI service such as Foursquare, 
+[POIProxy](https://github.com/alrocar/POIProxy) is a service to retrieve Points of Interest from any public POI service such as Foursquare, 
 Twitter, Buzz, Panoramio, Wikipedia, Flickr, etc... 
 It provides a common interface to all those services so it's easy to display them in OpenLayers.
 The complete list of services can be read here [POIProxy describeServices](http://poiproxy.mapps.es/describeServices).

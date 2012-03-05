@@ -50,6 +50,6 @@ The complete list of services can be read here [POIProxy describeServices](http:
 # Popups
 
 In the demo.html file I used my quick and dirty popup manager (SmartPopup.js) to display info 
-balloons, using templates but I hardly recommend you to use the enhaced and brand 
+balloons, using templates but I stringly recommend you to use the enhaced and brand 
 new [OL-FeaturePopups](https://github.com/jorix/OL-FeaturePopups) control.
 
